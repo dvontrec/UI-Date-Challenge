@@ -5,12 +5,13 @@ const yearSelect = $('#year');
 const daySelect = $('#days');
 const dayForm = $('#day-form');
 const dayLength = $('#num-of-days');
-
+const years = [1985, 2025];
+const selectYears = [];
 const majorSelects = [monthSelect, yearSelect];
 // Creates an array of months
 const months = [ "January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December" ];
-
-
+setDayNum();
+getYears();
 // Loops through each month and adds it as an option 
 months.forEach( (month, i) => 
 {
@@ -19,32 +20,41 @@ months.forEach( (month, i) =>
 	addOptions(monthSelect, month, i+1);	
 })
 
+selectYears.forEach( year => 
+{
+	addOptions(yearSelect, year, year);
+});
+
 
 // Calls the getMax Days value whenever the month or year select is changed
 majorSelects.forEach(select => 
 {
 	select.change( e =>
 	{
-		let numDays = getMaxDays(monthSelect.val(),yearSelect.val());
-		let days = getDays(numDays)
-		// Removes all options 
-		daySelect.find('option')
-			.remove()
-			.end();
-		// Adds options back
-		days.forEach((day) =>
-		{	
-			addOptions(daySelect, day, day);
-		})
+		setDayNum();
 	})
 });
 
+// when the day form is submitted
 dayForm.submit(e => 
 {
 	e.preventDefault()
 	getAsWeeks(dayLength.val());
 });
-
+function setDayNum()
+{
+	let numDays = getMaxDays(monthSelect.val(),yearSelect.val());
+	let days = getDays(numDays)
+	// Removes all options 
+	daySelect.find('option')
+		.remove()
+		.end();
+	// Adds options back
+	days.forEach((day) =>
+	{	
+		addOptions(daySelect, day, day);
+	})
+}
 //adds the corrisponding month to each option 
 function addOptions(select, option, index)
 {
@@ -53,6 +63,13 @@ function addOptions(select, option, index)
 			//sets the value to the month number
 			.val(index)
 			.text(option));
+}
+function getYears()
+{
+	for(let i = years[0]; i<= years[1]; i++)
+	{
+		selectYears.push(i);
+	}
 }
 // Adds a day up till the maximum number of days
 function getDays(numDays)
@@ -73,5 +90,6 @@ function getMaxDays(month, year)
 // Function used to convert days to weeks
 function getAsWeeks(days)
 {
+	// Logs the number of weeks rounded up
 	console.log(Math.ceil(days/7));
 }
