@@ -7,18 +7,16 @@
 </head>
 <body>
 	<div>
-		<div>
+		<form id="day-form">
 			<select id="months"></select>
 			<select id="days"></select>
 			<select id="year"><option value="2018">2018</option></select>
-		</div>
-		<div>
 			<label for="number-of-days">Number Of Days</label>
-			<input type="text" name="number-of-days">
-		</div>
+			<input type="number" id="num-of-days" name="number-of-days" required="true">
 			<label for="country-code">Country Code</label>
-			<input type="text" name="country-code">
-		</div
+			<input type="text" name="country-code" required="true">
+			<button>Submit</button>
+		</form>
 	</div>
 
 	<script

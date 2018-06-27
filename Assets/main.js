@@ -1,32 +1,16 @@
 'use strict'
-
+//2 hours
 const monthSelect = $('#months');
 const yearSelect = $('#year');
 const daySelect = $('#days');
+const dayForm = $('#day-form');
+const dayLength = $('#num-of-days');
 
 const majorSelects = [monthSelect, yearSelect];
 // Creates an array of months
 const months = [ "January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December" ];
 
-let numDays = getMaxDays(monthSelect.val(),yearSelect.val());
-let days = [];
-getDays()
 
-// Adds a day up till the maximum number of days
-function getDays()
-{
-	days.splice(0,days.length);
-	for(let i = 1; i <= numDays; i++)
-	{
-		days.push(i);
-	}
-}
-
-//adds the days to day select
-days.forEach((day) =>
-{	
-	addOptions(daySelect, day, day);
-})
 // Loops through each month and adds it as an option 
 months.forEach( (month, i) => 
 {
@@ -41,9 +25,8 @@ majorSelects.forEach(select =>
 {
 	select.change( e =>
 	{
-		console.log(days.length)
-		getDays();
-		console.log(days.length)
+		let numDays = getMaxDays(monthSelect.val(),yearSelect.val());
+		let days = getDays(numDays)
 		// Removes all options 
 		daySelect.find('option')
 			.remove()
@@ -56,6 +39,12 @@ majorSelects.forEach(select =>
 	})
 });
 
+dayForm.submit(e => 
+{
+	e.preventDefault()
+	getAsWeeks(dayLength.val());
+});
+
 //adds the corrisponding month to each option 
 function addOptions(select, option, index)
 {
@@ -65,10 +54,24 @@ function addOptions(select, option, index)
 			.val(index)
 			.text(option));
 }
-
+// Adds a day up till the maximum number of days
+function getDays(numDays)
+{
+	let days = []
+	for(let i = 1; i <= numDays; i++)
+	{
+		days.push(i);
+	}
+	return days;
+}
 // Function to find the maximum number of days in a month
 function getMaxDays(month, year)
 {
 	// returns the maximum number of days given the year and the month
 	return new Date(year, month, 0).getDate();
+}
+// Function used to convert days to weeks
+function getAsWeeks(days)
+{
+	console.log(Math.ceil(days/7));
 }
