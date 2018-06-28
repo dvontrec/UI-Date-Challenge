@@ -36,6 +36,7 @@ majorSelects.forEach(select =>
 	})
 });
 
+init();
 // when the day form is submitted
 dayForm.submit(e => 
 {
@@ -98,17 +99,36 @@ function getAsWeeks(days)
 
 function addCalender()
 {
-	calender.append(makeMonth())
+	// const month = (makeMonth())
+	// month.append(makeDays());
+	calender.append(makeDays());
 }
 
 function makeMonth()
 {
+	const month = months[monthSelect.val() -1]
 	return(
-		`<div class="month">
-			<p>${months[monthSelect.val() -1]}</p>
+		`<div class="month" id="${month}">
+			<p>${month}</p>
 			<p>${yearSelect.val()}</p>
 		</div>`
 	);
+}
+
+function makeDays()
+{
+	const days = $('<div>')
+
+	for(let i = 0; i< 12; i++)
+	{
+		days.append(`<p>${i}</p>`);
+	}
+	return(days);
+}
+
+function init()
+{
+	yearSelect.val(2018);
 }
 
 
