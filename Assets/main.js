@@ -8,6 +8,7 @@ const dayLength = $('#num-of-days');
 const years = [1985, 2025];
 const selectYears = [];
 const majorSelects = [monthSelect, yearSelect];
+const calender = $('#calender');
 // Creates an array of months
 const months = [ "January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December" ];
 setDayNum();
@@ -92,4 +93,22 @@ function getAsWeeks(days)
 {
 	// Logs the number of weeks rounded up
 	console.log(Math.ceil(days/7));
+	addCalender()
 }
+
+function addCalender()
+{
+	calender.append(makeMonth())
+}
+
+function makeMonth()
+{
+	return(
+		`<div class="month">
+			<p>${months[monthSelect.val() -1]}</p>
+			<p>${yearSelect.val()}</p>
+		</div>`
+	);
+}
+
+
