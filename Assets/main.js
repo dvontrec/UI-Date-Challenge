@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 // Sets the initial variables
 const monthSelect = $('#months');
 const yearSelect = $('#year');
