@@ -6,12 +6,9 @@ body{
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-around;
 }
 .month{
-	min-width: 100%;
-	display: flex;
-	flex-direction: column;
+	width: 33%;
 	align-items: center;
 }
 
@@ -34,4 +31,8 @@ body{
 }
 .exess{
 	background-color: gray;
+}
+
+#reset-form{
+	display: hidden
 }

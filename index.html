@@ -16,18 +16,19 @@
 			</div>
 			<div class="form-group">
 				<label for="number-of-days">Number Of Days</label>
-				<input type="number" id="num-of-days" name="number-of-days" >
+				<input type="number" id="num-of-days" name="number-of-days" required="true">
 			</div>
 			<div class="form-group">
 				<label for="country-code">Country Code</label>
-				<input type="text" name="country-code" >
+				<input type="text" name="country-code" required="true">
 			</div>
 			<button>Submit</button>
 		</form>
 		<br>
 		<div class="container">
-			<div id="calender" class="container"><form class="form"><button>New Dates</button></form></div>
+			<div id="calender" class="container"></div>
 		</div>
+		<form id="reset-form"><button>New Dates</button></form>
 	</div>
 
 	<script
