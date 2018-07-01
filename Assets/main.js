@@ -128,27 +128,35 @@ function makeMonth()
 }
 
 //function used to make the weeks of the month
-function makeWeeks()
+function getExess()
 {
+	console.log("add day");
+	return $('<p class="exess">');
 }
 
 //function used to populate the days of the weeks
 function makeDays(start, end)
 {
+	const startDate = new Date (`${month} ${start}, ${year}`);
+	console.log(startDate);
 	const days = $('<div class="days">')
-
+	for(let j = 0; j < startDate.getDay(); j++)
+	{
+		const exDay = getExess();
+		$(days).append($(exDay));
+	}	
 	for(let i = start; i < (start+end); i++)
 	{
 		const thisDate = new Date(`${month} ${i}, ${year}`);
+		
 		if(thisDate.getDate())
 		{
 			let day = $(`<p class="weekday">${i}</p>`);
-			if(thisDate.getDay() == 0 || thisDate.getDate() == 6)
+			if(thisDate.getDay() == 0 || thisDate.getDay() == 6)
 			{
 				$(day).removeClass('weekday');
 				$(day).addClass('weekend');
 			}
-			console.log(thisDate.getDay());
 			days.append($(day));
 			totalDays --;
 		}

@@ -21,7 +21,7 @@ body{
 }
 
 .days p{
-	min-width: 15%;
+	min-width: 14%;
 	border: 1px solid black;
 }
 .weekday{
@@ -29,4 +29,7 @@ body{
 }
 .weekend{
 	background-color: yellow;
+}
+.exess{
+	background-color: gray;
 }
