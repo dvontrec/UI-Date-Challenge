@@ -116,7 +116,7 @@ function getMaxDays(month, year)
 //when the form is submitted the calender will be populated
 function addCalender()
 {
-	calender.show();
+	$('#reset-form').show();
 	month  = months[monthSelect.val() -1]
 	year = parseInt(yearSelect.val())
 	startDay = parseInt(daySelect.val())
@@ -195,7 +195,6 @@ function makeDays(start, end)
 function init()
 {
 	yearSelect.val(2018);
-	$(calender).hide();
 }
 
 
