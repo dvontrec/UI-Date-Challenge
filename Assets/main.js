@@ -116,7 +116,9 @@ function getMaxDays(month, year)
 //when the form is submitted the calender will be populated
 function addCalender()
 {
+	//shows the form used to reset the page
 	$('#reset-form').show();
+	//sets the values for month, year, start day, and total days
 	month  = months[monthSelect.val() -1]
 	year = parseInt(yearSelect.val())
 	startDay = parseInt(daySelect.val())
@@ -129,6 +131,7 @@ function addCalender()
 //Function used to populate months
 function makeMonth()
 {
+	//creates an html element to hold the calender header
 	const head = (`
 		<div class="month" id="${month}">
 			<p>${month} ${year}</p>
@@ -136,22 +139,30 @@ function makeMonth()
 			<p>S</p><p>M</p><p>T</p><p>W</p><p>Th</p><p>F</p><p>S</p>
 			</div>
 		</div>`);
+	//as long as there are still days to be rendered
 	if(totalDays>0)
 	{
+		//adds a new calender  to the be rendered
 		$(head).appendTo(calender).append(makeDays(startDay, totalDays));
+		//recursive method calls itself until there are no days left
 		makeMonth();
 	}
 }
 
+//function used to add extra days to the calender
 function addExtra(target, start, end)
 {
+	//loops as long as the start point is less than the end point
 	for(let j = start; j < end; j++)
 	{
+		//creates an extra day p element
 		const exDay = $('<p class="exess">');
+		//adds the extra day to the target element
 		$(target).append($(exDay));
 	}
 }
 
+//
 function getADay()
 {
 	const section = $(`<div>`)
@@ -167,42 +178,66 @@ function getADay()
 //function used to populate the days of the weeks
 function makeDays(start, end)
 {
+	//sets the start date as a new date (month day, year)
 	const startDate = new Date (`${month} ${start}, ${year}`);
+	//creates a div for the days to be stored
 	const days = $('<div class="days">');
+	//calls the add extra function to add days before the first rendered day of this calender
 	addExtra(days, 0, startDate.getDay());	
+	//loops through the days left in the total number of days
 	for(let i = start; i < (start+end); i++)
 	{
+		//sets the date to be the current day in the loop
 		const thisDate = new Date(`${month} ${i}, ${year}`);
 		
+		//if the date is in the calender
 		if(thisDate.getDate())
 		{
+			//creates a new weekday with the correct day number
 			let day = $(`<p class="weekday">${i}</p>`);
+			//if the day is a weekend 0=sunday 6=saturday
 			if(thisDate.getDay() == 0 || thisDate.getDay() == 6)
 			{
+				//removes the weekday class
 				$(day).removeClass('weekday');
+				//adds the wekend class
 				$(day).addClass('weekend');
 			}
+			//adds this day to the days div
 			days.append($(day));
+			//subtracts one from the total days
 			totalDays --;
+			//if the total days is 0
 			if(totalDays <= 0)
 			{
+				//adds extra days to fill in the week
 				addExtra(days,thisDate.getDay(), 6);
 			}
 		}
+		//if the date is not in the calender
 		else
 		{	
+			//creates a record of the calenders last day
 			const lastDate = new Date(`${month} ${i-1}, ${year}`);
+			//adds any extra days to the end of the rendered week
 			addExtra(days, lastDate.getDay(),6);
+			//if the month is december 
 			if(month === "December")
 			{
+				//sets the next month to january
 				month = "January";
+				//increases the year by 1
 				year = year +1;
 			}
+			//if the month is not december move along in the months array by 1 keeping the same year
 			else{month = months[months.indexOf(month) +1];}
+			//sets ths start day to 1 because it is the first of a new month
 			startDay = 1;
+			//return the days element and stops the loop
 			return(days);
 		}
 	}
+	//returns the days element
 	return(days);
 }
 
