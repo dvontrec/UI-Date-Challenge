@@ -1,5 +1,5 @@
 'use strict'
-//2 hours
+// 3 hours
 const monthSelect = $('#months');
 const yearSelect = $('#year');
 const daySelect = $('#days');
@@ -13,6 +13,10 @@ const calender = $('#calender');
 const months = [ "January", "February", "March", "April", "May", "June","July", "August", "September", "October", "November", "December" ];
 setDayNum();
 getYears();
+let month;
+let year;
+let startDay;
+let totalDays;
 // Loops through each month and adds it as an option 
 months.forEach( (month, i) => 
 {
@@ -66,6 +70,8 @@ function addOptions(select, option, index)
 			.val(index)
 			.text(option));
 }
+
+//function used to add the years as options
 function getYears()
 {
 	for(let i = years[0]; i<= years[1]; i++)
@@ -93,39 +99,71 @@ function getMaxDays(month, year)
 function getAsWeeks(days)
 {
 	// Logs the number of weeks rounded up
-	console.log(Math.ceil(days/7));
 	addCalender()
 }
 
+//when the form is submitted the calender will be populated
 function addCalender()
 {
-	// const month = (makeMonth())
+	 month  = months[monthSelect.val() -1]
+	 year = parseInt(yearSelect.val())
+	 startDay = parseInt(daySelect.val())
+	 totalDays = parseInt(dayLength.val())
 	// month.append(makeDays());
-	calender.append(makeDays());
+	makeMonth();
 }
 
+
+//Function used to populate months
 function makeMonth()
 {
-	const month = months[monthSelect.val() -1]
-	return(
-		`<div class="month" id="${month}">
-			<p>${month}</p>
-			<p>${yearSelect.val()}</p>
+	if(totalDays>0)
+	{
+		$(`<div class="month" id="${month}">
+			<p>${month} ${year}</p>
 		</div>`
-	);
+		).appendTo(calender).append(makeDays(startDay, totalDays));
+		makeMonth();
+	}
 }
 
-function makeDays()
+//function used to make the weeks of the month
+function makeWeeks()
 {
-	const days = $('<div>')
+}
 
-	for(let i = 0; i< 12; i++)
+//function used to populate the days of the weeks
+function makeDays(start, end)
+{
+	const days = $('<div class="days">')
+
+	for(let i = start; i < (start+end); i++)
 	{
-		days.append(`<p>${i}</p>`);
+		const thisDate = new Date(`${month} ${i}, ${year}`);
+		if(thisDate.getDate())
+		{
+			let day = $(`<p class="weekday">${i}</p>`);
+			if(thisDate.getDay() == 0 || thisDate.getDate() == 6)
+			{
+				$(day).removeClass('weekday');
+				$(day).addClass('weekend');
+			}
+			console.log(thisDate.getDay());
+			days.append($(day));
+			totalDays --;
+		}
+		else
+		{
+			month = months[months.indexOf(month) +1];
+			startDay = 1;
+			return(days);
+		}
 	}
 	return(days);
 }
 
+
+//sets initial values
 function init()
 {
 	yearSelect.val(2018);

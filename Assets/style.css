@@ -8,11 +8,25 @@ body{
 	justify-content: space-around;
 }
 .month{
+	width: 33%;
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
 }
 
-.month p{
-	margin: auto 10px;
+.days{
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+
+.days p{
+	min-width: 15%;
+	border: 1px solid black;
+}
+.weekday{
+	background-color: green;
+}
+.weekend{
+	background-color: yellow;
 }
