@@ -21,6 +21,7 @@ body{
 }
 
 .days p{
+	text-align: center;
 	min-width: 14%;
 	border: 1px solid black;
 }

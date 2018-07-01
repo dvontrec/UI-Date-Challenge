@@ -127,10 +127,13 @@ function makeMonth()
 	}
 }
 
+function addExtra()
+{
+
+}
 //function used to make the weeks of the month
 function getExess()
 {
-	console.log("add day");
 	return $('<p class="exess">');
 }
 
@@ -138,8 +141,7 @@ function getExess()
 function makeDays(start, end)
 {
 	const startDate = new Date (`${month} ${start}, ${year}`);
-	console.log(startDate);
-	const days = $('<div class="days">')
+	const days = $('<div class="days">');
 	for(let j = 0; j < startDate.getDay(); j++)
 	{
 		const exDay = getExess();
@@ -159,9 +161,23 @@ function makeDays(start, end)
 			}
 			days.append($(day));
 			totalDays --;
+			if(totalDays <= 0)
+			{
+				for(let k = thisDate.getDay(); k < 6; k++)
+				{
+					const exDay = getExess();
+					$(days).append($(exDay));
+				}
+			}
 		}
 		else
-		{
+		{	
+			const lastDate = new Date(`${month} ${i-1}, ${year}`);
+			for(let k = lastDate.getDay(); k < 6; k++)
+			{
+				const exDay = getExess();
+				$(days).append($(exDay));
+			}
 			month = months[months.indexOf(month) +1];
 			startDay = 1;
 			return(days);
