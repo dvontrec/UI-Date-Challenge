@@ -1,5 +1,5 @@
 'use strict'
-// 3 hours
+// Sets the initial variables
 const monthSelect = $('#months');
 const yearSelect = $('#year');
 const daySelect = $('#days');
@@ -25,6 +25,7 @@ months.forEach( (month, i) =>
 	addOptions(monthSelect, month, i+1);	
 })
 
+//adds the options to the year select 
 selectYears.forEach( year => 
 {
 	addOptions(yearSelect, year, year);
@@ -34,22 +35,33 @@ selectYears.forEach( year =>
 // Calls the getMax Days value whenever the month or year select is changed
 majorSelects.forEach(select => 
 {
+	//when the year or month is changed 
 	select.change( e =>
-	{
+	{	
+		//set the maximum day number
 		setDayNum();
 	})
 });
 
+//calls the init function
 init();
 // when the day form is submitted
 dayForm.submit(e => 
 {
+	//prevent the page from reloading
 	e.preventDefault()
-	getAsWeeks(dayLength.val());
+	//hides the form for selecting a time length
+	$(dayForm).hide();
+	//calls the add calender function
+	addCalender()
 });
+
+//function used to set the maximum number of days
 function setDayNum()
 {
+	// gets the maximum number of days of the selected month and year
 	let numDays = getMaxDays(monthSelect.val(),yearSelect.val());
+	//sets the days value to be the value the getDays function returns
 	let days = getDays(numDays)
 	// Removes all options 
 	daySelect.find('option')
@@ -74,6 +86,7 @@ function addOptions(select, option, index)
 //function used to add the years as options
 function getYears()
 {
+	//loops through all numbers between years[0] to years[1] and adds them to the selections
 	for(let i = years[0]; i<= years[1]; i++)
 	{
 		selectYears.push(i);
@@ -82,11 +95,15 @@ function getYears()
 // Adds a day up till the maximum number of days
 function getDays(numDays)
 {
-	let days = []
+	//creates an empty days array
+	let days = [];
+	//loops through all numbers 1- tha max number of days in the month
 	for(let i = 1; i <= numDays; i++)
 	{
+		//adds the number to the array
 		days.push(i);
 	}
+	//returns the days array
 	return days;
 }
 // Function to find the maximum number of days in a month
@@ -95,20 +112,15 @@ function getMaxDays(month, year)
 	// returns the maximum number of days given the year and the month
 	return new Date(year, month, 0).getDate();
 }
-// Function used to convert days to weeks
-function getAsWeeks(days)
-{
-	// Logs the number of weeks rounded up
-	addCalender()
-}
 
 //when the form is submitted the calender will be populated
 function addCalender()
 {
-	 month  = months[monthSelect.val() -1]
-	 year = parseInt(yearSelect.val())
-	 startDay = parseInt(daySelect.val())
-	 totalDays = parseInt(dayLength.val())
+	calender.show();
+	month  = months[monthSelect.val() -1]
+	year = parseInt(yearSelect.val())
+	startDay = parseInt(daySelect.val())
+	totalDays = parseInt(dayLength.val())
 	// month.append(makeDays());
 	makeMonth();
 }
@@ -131,14 +143,9 @@ function addExtra(target, start, end)
 {
 	for(let j = start; j < end; j++)
 	{
-		const exDay = getExess();
+		const exDay = $('<p class="exess">');
 		$(target).append($(exDay));
 	}
-}
-//function used to make the weeks of the month
-function getExess()
-{
-	return $('<p class="exess">');
 }
 
 //function used to populate the days of the weeks
@@ -170,7 +177,12 @@ function makeDays(start, end)
 		{	
 			const lastDate = new Date(`${month} ${i-1}, ${year}`);
 			addExtra(days, lastDate.getDay(),6);
-			month = months[months.indexOf(month) +1];
+			if(month === "December")
+			{
+				month = "January";
+				year = year +1;
+			}
+			else{month = months[months.indexOf(month) +1];}
 			startDay = 1;
 			return(days);
 		}
@@ -183,6 +195,8 @@ function makeDays(start, end)
 function init()
 {
 	yearSelect.val(2018);
+	$(calender).hide();
 }
+
 
 
