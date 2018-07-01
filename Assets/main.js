@@ -129,12 +129,16 @@ function addCalender()
 //Function used to populate months
 function makeMonth()
 {
+	const head = (`
+		<div class="month" id="${month}">
+			<p>${month} ${year}</p>
+			<div class="days head">
+			<p>S</p><p>M</p><p>T</p><p>W</p><p>Th</p><p>F</p><p>S</p>
+			</div>
+		</div>`);
 	if(totalDays>0)
 	{
-		$(`<div class="month" id="${month}">
-			<p>${month} ${year}</p>
-		</div>`
-		).appendTo(calender).append(makeDays(startDay, totalDays));
+		$(head).appendTo(calender).append(makeDays(startDay, totalDays));
 		makeMonth();
 	}
 }
@@ -146,6 +150,18 @@ function addExtra(target, start, end)
 		const exDay = $('<p class="exess">');
 		$(target).append($(exDay));
 	}
+}
+
+function getADay()
+{
+	const section = $(`<div>`)
+	const dayList = ['S','M','T','W','Th','F','S'];
+	for(let i = 0; i < dayList.length; i++)
+	{
+		section.append(`<p>${dayList[i]}</p>`)
+	}
+	console.log(section);
+	return(section);
 }
 
 //function used to populate the days of the weeks

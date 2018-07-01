@@ -8,7 +8,7 @@ body{
 	flex-wrap: wrap;
 }
 .month{
-	width: 33%;
+	min-width: 33%;
 	align-items: center;
 }
 
@@ -18,16 +18,20 @@ body{
 	flex-wrap: wrap;
 }
 
+.days .head{
+	margin-bottom: none;
+}
+
 .days p{
 	text-align: center;
 	min-width: 14%;
 	border: 1px solid black;
 }
 .weekday{
-	background-color: green;
+	background-color: rgba(89, 219, 118, 0.69);
 }
 .weekend{
-	background-color: yellow;
+	background-color: rgba(230, 248, 74, 0.62);
 }
 .exess{
 	background-color: gray;
