@@ -191,7 +191,7 @@ function makeDays(start, end)
 		const thisDate = new Date(`${month} ${i}, ${year}`);
 		
 		//if the date is in the calender
-		if(thisDate.getDate())
+		if(thisDate.getDate() == i)
 		{
 			//creates a new weekday with the correct day number
 			let day = $(`<p class="weekday">${i}</p>`);
