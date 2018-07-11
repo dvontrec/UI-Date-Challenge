@@ -133,7 +133,7 @@ function makeMonth()
 {
 	//creates an html element to hold the calender header
 	const head = (`
-		<div class="month" id="${month}">
+		<div class="month col-md-4 col-xs-6" id="${month}">
 			<p>${month} ${year}</p>
 			<div class="days head">
 			<p>S</p><p>M</p><p>T</p><p>W</p><p>Th</p><p>F</p><p>S</p>
